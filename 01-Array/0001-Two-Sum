@@ -1,0 +1,53 @@
+# 20. Valid Parentheses (有效的括號)
+
+- **難易度 (Difficulty):** Easy
+- **主題 (Topics):** Stack, String
+- **題目連結:** [LeetCode 20](https://leetcode.com/problems/valid-parentheses/)
+
+---
+
+## 📝 題目大意 (Problem Summary)
+給定一個僅包含 `'('`, `')'`, `'{'`, `'}'`, `'['`, `']'` 的字串 `s`，判斷該字串是否為有效的括號組合。必須滿足「左括號必須用相同類型的右括號閉合」以及「正確的閉合順序」。
+
+---
+
+## 💡 解題思路 (Approach)
+- 利用 **Stack（後進先出 LIFO）** 的特性來匹配括號。
+- 遍歷字串中的每個字元：
+  - 若遇到 **左括號**，將其 `push` 進 Stack 中。
+  - 若遇到 **右括號**：
+    - 檢查 Stack 是否為空，若為空直接回傳 `false`。
+    - 取出 Stack 頂端元素，檢查是否與當前右括號匹配，若不匹配回傳 `false`。
+- 遍歷結束後，若 Stack 為空則代表完全匹配，回傳 `true`。
+
+---
+
+## ⏱️ 複雜度分析 (Complexity)
+- **時間複雜度 (Time Complexity):** $\mathcal{O}(N)$
+  - 只需要遍歷長度為 $N$ 的字串一次，Stack 的 `push` 與 `pop` 均為 $\mathcal{O}(1)$ 操作。
+- **空間複雜度 (Space Complexity):** $\mathcal{O}(N)$
+  - 最壞情況下（如全為左括號 `(((((`），Stack 最多會儲存 $N$ 個字元。
+
+---
+
+## 💻 C++ 程式碼 (Implementation)
+
+```cpp
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> st;
+        for (char c : s) {
+            if (c == '(' || c == '{' || c == '[') {
+                st.push(c);
+            } else {
+                if (st.empty()) return false;
+                if (c == ')' && st.top() != '(') return false;
+                if (c == '}' && st.top() != '{') return false;
+                if (c == ']' && st.top() != '[') return false;
+                st.pop();
+            }
+        }
+        return st.empty();
+    }
+};
