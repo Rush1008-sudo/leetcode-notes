@@ -1,12 +1,12 @@
 # 20. Valid Parentheses (有效的括號)
 
-- **難易度 (Difficulty):** Easy
-- **主題 (Topics):** Stack, String
-- **題目連結:** [LeetCode 20](https://leetcode.com/problems/valid-parentheses/)
+難易度 (Difficulty):Easy
+主題 (Topics):Stack, String
+題目連結(LeetCode Link):[LeetCode 20](https://leetcode.com/problems/valid-parentheses/)
 
 ---
 
-## 📝 題目大意 (Problem Summary)
+題目大意 (Problem Summary)
 給定一個僅包含 `'('`, `')'`, `'{'`, `'}'`, `'['`, `']'` 的字串 `s`，判斷該字串是否為有效的括號組合。必須滿足「左括號必須用相同類型的右括號閉合」以及「正確的閉合順序」。
 
 ---
