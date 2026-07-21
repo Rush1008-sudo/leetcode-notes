@@ -1,53 +1,58 @@
-# 20. Valid Parentheses (有效的括號)
+# 20. Valid Parentheses
 
-難易度 (Difficulty):Easy
-主題 (Topics):Stack, String
-題目連結(LeetCode Link):[LeetCode 20](https://leetcode.com/problems/valid-parentheses/)
+- Difficulty: Easy
+- Language: C++
+- Link: https://leetcode.com/problems/valid-parentheses/
 
----
+## Problem Statement
 
-題目大意 (Problem Summary)
-給定一個僅包含 `'('`, `')'`, `'{'`, `'}'`, `'['`, `']'` 的字串 `s`，判斷該字串是否為有效的括號組合。必須滿足「左括號必須用相同類型的右括號閉合」以及「正確的閉合順序」。
+Given a string `s` containing characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
 
----
+An input string is valid if:
+1. Open brackets must be closed by the same type of brackets.
+2. Open brackets must be closed in the correct order.
+3. Every close bracket has a corresponding open bracket of the same type.
 
-## 💡 解題思路 (Approach)
-- 利用 **Stack（後進先出 LIFO）** 的特性來匹配括號。
-- 遍歷字串中的每個字元：
-  - 若遇到 **左括號**，將其 `push` 進 Stack 中。
-  - 若遇到 **右括號**：
-    - 檢查 Stack 是否為空，若為空直接回傳 `false`。
-    - 取出 Stack 頂端元素，檢查是否與當前右括號匹配，若不匹配回傳 `false`。
-- 遍歷結束後，若 Stack 為空則代表完全匹配，回傳 `true`。
+## Approach
 
----
+Use a stack to track open brackets:
+1. Iterate through the string character by character.
+2. If the character is an opening bracket `(`, `{`, `[`, push it onto the stack.
+3. If it is a closing bracket, check whether the stack is empty. If empty, return false. Otherwise, pop the top character and check if it matches the current closing bracket.
+4. After traversing the string, return true if the stack is empty; otherwise, return false.
 
-## ⏱️ 複雜度分析 (Complexity)
-- **時間複雜度 (Time Complexity):** $\mathcal{O}(N)$
-  - 只需要遍歷長度為 $N$ 的字串一次，Stack 的 `push` 與 `pop` 均為 $\mathcal{O}(1)$ 操作。
-- **空間複雜度 (Space Complexity):** $\mathcal{O}(N)$
-  - 最壞情況下（如全為左括號 `(((((`），Stack 最多會儲存 $N$ 個字元。
+## Complexity
 
----
+- Time Complexity: O(N), where N is the length of the string. Each character is pushed and popped at most once.
+- Space Complexity: O(N), for storing characters in the stack in the worst case.
 
-## 💻 C++ 程式碼 (Implementation)
+## Solution
 
 ```cpp
+#include <stack>
+#include <string>
+
 class Solution {
 public:
-    bool isValid(string s) {
-        stack<char> st;
+    bool isValid(std::string s) {
+        std::stack<char> st;
+        
         for (char c : s) {
             if (c == '(' || c == '{' || c == '[') {
                 st.push(c);
             } else {
                 if (st.empty()) return false;
-                if (c == ')' && st.top() != '(') return false;
-                if (c == '}' && st.top() != '{') return false;
-                if (c == ']' && st.top() != '[') return false;
+                
+                char top = st.top();
+                if ((c == ')' && top != '(') ||
+                    (c == '}' && top != '{') ||
+                    (c == ']' && top != '[')) {
+                    return false;
+                }
                 st.pop();
             }
         }
+        
         return st.empty();
     }
 };
