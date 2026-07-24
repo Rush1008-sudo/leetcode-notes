@@ -1,58 +1,98 @@
-# 20. Valid Parentheses
+# 1. Two Sum
 
 - Difficulty: Easy
 - Language: C++
-- Link: https://leetcode.com/problems/valid-parentheses/
+- **Topics**: `Hash table`, `Array`
+- Link: https://leetcode.com/problems/two-sum/
 
 ## Problem Statement
 
-Given a string `s` containing characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 
-An input string is valid if:
-1. Open brackets must be closed by the same type of brackets.
-2. Open brackets must be closed in the correct order.
-3. Every close bracket has a corresponding open bracket of the same type.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
-## Approach
+You can return the answer in any order.
 
-Use a stack to track open brackets:
-1. Iterate through the string character by character.
-2. If the character is an opening bracket `(`, `{`, `[`, push it onto the stack.
-3. If it is a closing bracket, check whether the stack is empty. If empty, return false. Otherwise, pop the top character and check if it matches the current closing bracket.
-4. After traversing the string, return true if the stack is empty; otherwise, return false.
+## Approach 1: Brute Force
+
+<img width="800" height="663" alt="image" src="https://github.com/user-attachments/assets/59e67f37-98a7-4dab-a25e-fad377d1adfc" />
+
 
 ## Complexity
 
-- Time Complexity: O(N), where N is the length of the string. Each character is pushed and popped at most once.
-- Space Complexity: O(N), for storing characters in the stack in the worst case.
-
+- Time complexity: O(n²). For each element, we try to find its complement by looping through the rest of the array which takes O(n) time. Therefore, the time complexity is o(n²)
+- Space complexity: O(1). The space required does not depend on the size of the input array, so only constant space is used.
+  
 ## Solution
 
 ```cpp
-#include <stack>
-#include <string>
-
 class Solution {
 public:
-    bool isValid(std::string s) {
-        std::stack<char> st;
-        
-        for (char c : s) {
-            if (c == '(' || c == '{' || c == '[') {
-                st.push(c);
-            } else {
-                if (st.empty()) return false;
-                
-                char top = st.top();
-                if ((c == ')' && top != '(') ||
-                    (c == '}' && top != '{') ||
-                    (c == ']' && top != '[')) {
-                    return false;
+    vector<int> twoSum(vector<int>& nums, int target){
+        for(int i = 0; i < nums.size(); i++){
+            for(int j = i+1; j < nums.size(); j++){
+                if(nums[j] == target - nums[i]){
+                    return{i,j};
                 }
-                st.pop();
             }
         }
-        
-        return st.empty();
+        return {};
     }
 };
+```
+## Approach 2: Two-pass Hash Table
+
+<img width="800" height="576" alt="image" src="https://github.com/user-attachments/assets/393aa3e7-be5d-45bc-a2f7-6efacad1d964" />
+
+## Complexity Analysis
+
+- Time complexity: O(n).We traverse the list containing n elements exactly twice. Since the hash table reduces the lookup time to O(1), the overall time complexity is O(n).
+- Space complexity: O(n).The extra space required depends on the number of items stored in the hash table, which stores exactly n elements.
+  
+## Solution
+
+```cpp
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target){
+        unordered_map<int,int>hashmp;
+        for(int i = 0; i<nums.size();i++){
+            hashmp[nums[i]] = i;
+        }
+        for(int i = 0; i < nums.size(); i++){
+            int com = target - nums[i];
+            if(hashmp.find(com) != hashmp.end() && hashmp[com] != i){
+                return{i, hashmp[com]};
+            }
+        }
+        return {};
+    }
+};
+```
+## Approach 3: One-pass Hash Table
+
+<img width="800" height="1022" alt="image" src="https://github.com/user-attachments/assets/a2b7a223-3ba9-4e27-83d2-3711f89a4966" />
+
+## Complexity Analysis
+
+- Time complexity: O(n).We traverse the list containing n elements only once. Each lookup in the table costs only O(1) time.
+- Space complexity: O(n).The extra space required depends on the number of items stored in the hash table, which stores at most n elements.
+  
+## Solution
+
+```cpp
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int>hash;
+        for(int i = 0 ;i < nums.size() ;i++){
+            int complement = target - nums[i];
+            if(hash.find(complement) != hash.end()){
+                return {hash[complement] ,i};
+            }
+            hash[nums[i]] = i;
+        }
+        return {};
+    }
+};
+```
