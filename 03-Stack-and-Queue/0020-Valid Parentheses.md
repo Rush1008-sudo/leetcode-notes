@@ -2,6 +2,7 @@
 
 - Difficulty: Easy
 - Language: C++
+- **Topics**: `Stack`, `String`
 - Link: https://leetcode.com/problems/valid-parentheses/
 
 ## Problem Statement
