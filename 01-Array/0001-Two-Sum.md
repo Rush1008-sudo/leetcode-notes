@@ -13,6 +13,11 @@ You may assume that each input would have exactly one solution, and you may not 
 
 You can return the answer in any order.
 
+**Example 1:**
+> **Input:** `nums = [2,7,11,15]`, `target = 9`  
+> **Output:** `[0,1]`  
+> **Explanation:** Because `nums[0] + nums[1] == 9`, we return `[0, 1]`.
+
 ## Approach 1: Brute Force
 
 <img width="800" height="663" alt="image" src="https://github.com/user-attachments/assets/59e67f37-98a7-4dab-a25e-fad377d1adfc" />
