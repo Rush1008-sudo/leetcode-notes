@@ -37,23 +37,23 @@ Since an empty string reads the same forward and backward, it is a palindrome.`.
 class Solution {
 public:
     bool isPalindrome(string s) {
-        string filtered;
-        for(char ch : s){
-            if(isalnum(ch)){
+       string filtered;
+       for(char ch : s) {
+            if(isalnum(ch)) {
                 filtered += tolower(ch);
             }
-        }
-        int start = 0;
-        int last = filtered.size() - 1;
+       }
+       int start = 0;
+       int last = filtered.size() - 1;
 
-        while (start < last){
-            if(filtered[start] != filtered[last]){
+       while(start < last) {
+            if(filtered[start] != filtered[last]) {
                 return false;
-            }
+        }
             start ++;
             last --;
-        }
-        return true;
+       }
+       return true;
     }
 };
 ```
